@@ -1,0 +1,30 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "build lab3",
+            "type": "shell",
+            "command": "g++",
+            "args": [
+                "-o", "lab3", "main.cpp", "FDMApproximation.h", "FDMApproximation.cpp", 
+                "FDMGrid.h", "FDMGrid.cpp", "Preconditioners.h", "Solvers.h", "Solvers.cpp", 
+                "SparseMatrix.h", "SparseMatrix.cpp", "TaskFunctions.h", "TaskFunctions.cpp"
+            ],
+            "group": "build"
+        },
+        {
+            "label": "build mpi lab3",
+            "type": "shell",
+            "command": "mpic++",
+            "args": [
+                "-o", "lab3", "main.cpp", "FDMApproximation.h", "FDMApproximation.cpp", 
+                "FDMGrid.h", "FDMGrid.cpp", "Preconditioners.h", "Solvers.h", "Solvers.cpp", 
+                "SparseMatrix.h", "SparseMatrix.cpp", "TaskFunctions.h", "TaskFunctions.cpp",
+                "Decomposition.h", "Decomposition.cpp"
+            ],
+            "group": "build"
+        }
+    ]
+}
