@@ -27,9 +27,10 @@ int PCGM(const sparse_matrix& mA, vector& vSol, const vector& vF, double rEps, \
   double **vvRecvVal = (double**)malloc(sizeof(double*)*nExtSize);
   for (i = 0; i < nExtSize; ++i)
   {
-    len = decomp.m_vShift[i + 1] - decomp.m_vShift[i];
     if (i == nExtSize - 1)
-      len = decomp.m_vSendInd.size() - decomp.m_vShift[nExtSize - 1];
+        len = decomp.m_vSendInd.size() - decomp.m_vShift[nExtSize - 1];
+      else
+        len = decomp.m_vShift[i + 1] - decomp.m_vShift[i];
     vvSendVal[i] = (double*)malloc(sizeof(double)*len);
     vvRecvVal[i] = (double*)malloc(sizeof(double)*len);
     nExtVectLen += len;
@@ -54,9 +55,10 @@ int PCGM(const sparse_matrix& mA, vector& vSol, const vector& vF, double rEps, \
     // exchange interdomain node values
     for (i = 0; i < nExtSize; ++i)
     {
-      len = decomp.m_vShift[i + 1] - decomp.m_vShift[i];
       if (i == nExtSize - 1)
         len = decomp.m_vSendInd.size() - decomp.m_vShift[nExtSize - 1];
+      else
+        len = decomp.m_vShift[i + 1] - decomp.m_vShift[i];
       for (j = 0; j < len; ++j)
         vvSendVal[i][j] = vP[decomp.m_vSendInd[decomp.m_vShift[i] + j]];
       MPI_Isend(vvSendVal[i], len, MPI_DOUBLE, decomp.m_vRank[i], \
